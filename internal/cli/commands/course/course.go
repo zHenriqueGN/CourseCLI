@@ -8,11 +8,12 @@ import (
 
 func NewCourseCmd(courseDB *database.CourseDB) *cobra.Command {
 	createCmd := commands.NewCreateCmd(courseDB)
+	listCmd := commands.NewListCmd(courseDB)
 
 	var courseCmd cobra.Command
 	courseCmd.Use = "course"
 	courseCmd.Short = "course commands"
-	courseCmd.AddCommand(createCmd)
+	courseCmd.AddCommand(createCmd, listCmd)
 
 	return &courseCmd
 }

@@ -34,6 +34,7 @@ func runCreate(courseDB *database.CourseDB) cmdtypes.RunEFunc {
 		if err != nil {
 			return err
 		}
+		printCourse(course)
 		return nil
 	}
 }
