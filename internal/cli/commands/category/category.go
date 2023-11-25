@@ -9,11 +9,12 @@ import (
 func NewCategoryCmd(categoryDB *database.CategoryDB) *cobra.Command {
 	createCmd := commands.NewCreateCmd(categoryDB)
 	listCmd := commands.NewListCmd(categoryDB)
+	getCmd := commands.NewGetCmd(categoryDB)
 
 	var categoryCmd cobra.Command
 	categoryCmd.Use = "category"
 	categoryCmd.Short = "category commands"
-	categoryCmd.AddCommand(createCmd, listCmd)
+	categoryCmd.AddCommand(createCmd, listCmd, getCmd)
 
 	return &categoryCmd
 }
