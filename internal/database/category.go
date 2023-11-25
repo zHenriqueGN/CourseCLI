@@ -74,27 +74,3 @@ func (c *CategoryDB) FindAll() ([]*entity.Category, error) {
 
 	return categories, nil
 }
-
-func (c *CategoryDB) FindByCourseID(courseID string) (*entity.Category, error) {
-	stmt, err := c.db.Prepare(
-		`SELECT A.id, A.name, A.description FROM categories A
-		 INNER JOIN courses B
-		 ON A.id = B.category_id
-		 WHERE B.id = $1`,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-	row := stmt.QueryRow(courseID)
-	var category entity.Category
-	err = row.Scan(
-		&category.ID,
-		&category.Name,
-		&category.Description,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &category, nil
-}
