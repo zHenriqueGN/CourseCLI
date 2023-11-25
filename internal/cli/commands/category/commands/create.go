@@ -31,6 +31,7 @@ func runCreate(categoryDB *database.CategoryDB) cmdtypes.RunEFunc {
 		if err != nil {
 			return err
 		}
+		printCategory(category)
 		return nil
 	}
 }
