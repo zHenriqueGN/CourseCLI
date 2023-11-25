@@ -10,36 +10,37 @@ import (
 	"github.com/zHenriqueGN/CourseCLI/internal/entity"
 )
 
-var categoryId string
+var courseId string
 
-func NewGetCmd(categoryDB *database.CategoryDB) *cobra.Command {
+func NewGetCmd(courseDB *database.CourseDB) *cobra.Command {
 	var getCmd cobra.Command
 	getCmd.Use = "get"
-	getCmd.Short = "get a category"
-	getCmd.Flags().StringVar(&categoryId, "id", "", "category id")
+	getCmd.Short = "get a course"
+	getCmd.Flags().StringVar(&courseId, "id", "", "course id")
 	getCmd.MarkFlagRequired("id")
-	getCmd.RunE = runGet(categoryDB)
+	getCmd.RunE = runGet(courseDB)
 	return &getCmd
 }
 
-func runGet(categoryDB *database.CategoryDB) cmdtypes.RunEFunc {
+func runGet(courseDB *database.CourseDB) cmdtypes.RunEFunc {
 	return func(cmd *cobra.Command, args []string) error {
-		category, err := categoryDB.GetCategory(categoryId)
+		course, err := courseDB.FindByID(courseId)
 		if err != nil {
 			return err
 		}
-		printCategory(category)
+		printCourse(course)
 		return nil
 	}
 }
 
-func printCategory(category *entity.Category) {
+func printCourse(course *entity.Course) {
 	lines := []string{
 		"____________________________________________",
 		"ID: %s",
 		"NAME: %s",
-		"DESCRIPTION: %s\n",
+		"DESCRIPTION: %s",
+		"CATEGORY ID: %s\n",
 	}
 	joinedLines := strings.Join(lines, "\n")
-	fmt.Printf(joinedLines, category.ID, category.Name, category.Description)
+	fmt.Printf(joinedLines, course.ID, course.Name, course.Description, course.CategoryID)
 }

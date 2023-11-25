@@ -1,13 +1,9 @@
 package commands
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/spf13/cobra"
 	"github.com/zHenriqueGN/CourseCLI/internal/cli/cmdtypes"
 	"github.com/zHenriqueGN/CourseCLI/internal/database"
-	"github.com/zHenriqueGN/CourseCLI/internal/entity"
 )
 
 func NewListCmd(courseDB *database.CourseDB) *cobra.Command {
@@ -29,16 +25,4 @@ func runList(courseDB *database.CourseDB) cmdtypes.RunEFunc {
 		}
 		return nil
 	}
-}
-
-func printCourse(course *entity.Course) {
-	lines := []string{
-		"____________________________________________",
-		"ID: %s",
-		"NAME: %s",
-		"DESCRIPTION: %s",
-		"CATEGORY ID: %s\n",
-	}
-	joinedLines := strings.Join(lines, "\n")
-	fmt.Printf(joinedLines, course.ID, course.Name, course.Description, course.CategoryID)
 }
